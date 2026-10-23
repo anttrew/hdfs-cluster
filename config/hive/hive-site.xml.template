@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <!-- Удалённый Metastore: обязательное условие multi-client -->
+  <property>
+    <name>hive.metastore.uris</name>
+    <value>thrift://team-36-00:9083</value>
+  </property>
+  <property>
+    <name>hive.metastore.warehouse.dir</name>
+    <value>/user/hive/warehouse</value>
+  </property>
+
+  <!-- Подключение Metastore к PostgreSQL -->
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:postgresql://127.0.0.1:5432/metastore_db</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>org.postgresql.Driver</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>hive</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionPassword</name>
+    <value>__HIVE_METASTORE_PASSWORD__</value>
+  </property>
+
+  <!-- HiveServer2: слушаем на всех интерфейсах -->
+  <property><name>hive.server2.thrift.bind.host</name><value>0.0.0.0</value></property>
+  <property><name>hive.server2.thrift.port</name><value>10000</value></property>
+  <!-- Для простого теста: без Kerberos, без doAs-проксирования -->
+  <property><name>hive.server2.authentication</name><value>NONE</value></property>
+  <property><name>hive.server2.enable.doAs</name><value>false</value></property>
+
+  <!-- Партиционирование -->
+  <property><name>hive.exec.dynamic.partition</name><value>true</value></property>
+  <property><name>hive.exec.dynamic.partition.mode</name><value>nonstrict</value></property>
+  <property>
+    <name>hive.metastore.event.db.notification.api.auth</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>hive.execution.engine</name>
+    <value>mr</value>
+  </property>
+  <property>
+    <name>tez.container.java.opts</name>
+    <value>--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED</value>
+  </property>
+
+</configuration>
